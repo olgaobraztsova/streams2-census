@@ -18,14 +18,14 @@ public class Main {
             );
         }
 
-        //Найти количество несовершеннолетних (т.е. людей младше 18 лет)
+        //РќР°Р№С‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРµСЃРѕРІРµСЂС€РµРЅРЅРѕР»РµС‚РЅРёС… (С‚.Рµ. Р»СЋРґРµР№ РјР»Р°РґС€Рµ 18 Р»РµС‚)
         long count = persons.stream()
                 .filter(person -> person.getAge() < 18)
                 .count();
         System.out.println(count);
 
 
-        //Получить список фамилий призывников (т.е. мужчин от 18 и до 27 лет)
+        //РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє С„Р°РјРёР»РёР№ РїСЂРёР·С‹РІРЅРёРєРѕРІ (С‚.Рµ. РјСѓР¶С‡РёРЅ РѕС‚ 18 Рё РґРѕ 27 Р»РµС‚)
 
         List<String> recruits = persons.stream()
                 .filter(person -> person.getSex().name().equals("MAN"))
@@ -36,15 +36,15 @@ public class Main {
 
         System.out.println(recruits.size());
 
-        //Получить отсортированный по фамилии список потенциально работоспособных людей
-        // с высшим образованием в выборке (т.е. людей с высшим образованием
-        // от 18 до 60 лет для женщин и до 65 лет для мужчин).
+        //РџРѕР»СѓС‡РёС‚СЊ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ РїРѕ С„Р°РјРёР»РёРё СЃРїРёСЃРѕРє РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕ СЂР°Р±РѕС‚РѕСЃРїРѕСЃРѕР±РЅС‹С… Р»СЋРґРµР№
+        // СЃ РІС‹СЃС€РёРј РѕР±СЂР°Р·РѕРІР°РЅРёРµРј РІ РІС‹Р±РѕСЂРєРµ (С‚.Рµ. Р»СЋРґРµР№ СЃ РІС‹СЃС€РёРј РѕР±СЂР°Р·РѕРІР°РЅРёРµРј
+        // РѕС‚ 18 РґРѕ 60 Р»РµС‚ РґР»СЏ Р¶РµРЅС‰РёРЅ Рё РґРѕ 65 Р»РµС‚ РґР»СЏ РјСѓР¶С‡РёРЅ).
 
 
-        //Создаем коллекцию для выборки
+        //РЎРѕР·РґР°РµРј РєРѕР»Р»РµРєС†РёСЋ РґР»СЏ РІС‹Р±РѕСЂРєРё
         Collection<Person> fitToWork = new ArrayList<>();
 
-        //стрим для работоспособных женщин
+        //СЃС‚СЂРёРј РґР»СЏ СЂР°Р±РѕС‚РѕСЃРїРѕСЃРѕР±РЅС‹С… Р¶РµРЅС‰РёРЅ
         persons.stream()
                 .filter(person -> person.getSex().name().equals("WOMAN"))
                 .filter(person -> person.getEducation().name().equals("HIGHER"))
@@ -52,7 +52,7 @@ public class Main {
                 .filter(person -> person.getAge() <= 60)
                 .forEach(fitToWork::add);
 
-        //стрим для работоспособных мужчин
+        //СЃС‚СЂРёРј РґР»СЏ СЂР°Р±РѕС‚РѕСЃРїРѕСЃРѕР±РЅС‹С… РјСѓР¶С‡РёРЅ
         persons.stream()
                 .filter(person -> person.getSex().name().equals("MAN"))
                 .filter(person -> person.getEducation().name().equals("HIGHER"))
@@ -60,10 +60,10 @@ public class Main {
                 .filter(person -> person.getAge() <= 65)
                 .forEach(fitToWork::add);
 
-        //создаем коллекцию для сортированной выборки
+        //СЃРѕР·РґР°РµРј РєРѕР»Р»РµРєС†РёСЋ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕР№ РІС‹Р±РѕСЂРєРё
         Collection<Person> sortedFitToWork = new ArrayList<>();
 
-        //сортируем
+        //СЃРѕСЂС‚РёСЂСѓРµРј
         fitToWork.stream()
                 .sorted(Comparator.comparing(Person::getSurname))
                 .forEach(sortedFitToWork::add);
