@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -44,31 +45,24 @@ public class Main {
         //Создаем коллекцию для выборки
         Collection<Person> fitToWork = new ArrayList<>();
 
-        //стрим для работоспособных женщин
-        persons.stream()
-                .filter(person -> person.getSex().name().equals("WOMAN"))
-                .filter(person -> person.getEducation().name().equals("HIGHER"))
-                .filter(person -> person.getAge() >= 18)
-                .filter(person -> person.getAge() <= 60)
-                .forEach(fitToWork::add);
+        //создаем предикаты для последующего отсеивания женщин старше 60
+        Predicate<Person> isWoman = person -> person.getSex().name().equals("WOMAN");
+        Predicate<Person> overSixty = person -> person.getAge() > 60;
 
-        //стрим для работоспособных мужчин
+        //получаем отсортированный список согласно указанных условий
         persons.stream()
-                .filter(person -> person.getSex().name().equals("MAN"))
-                .filter(person -> person.getEducation().name().equals("HIGHER"))
                 .filter(person -> person.getAge() >= 18)
                 .filter(person -> person.getAge() <= 65)
+                .filter(person -> person.getEducation().name().equals("HIGHER"))
+                .filter(isWoman.and(overSixty).negate())
+                .sorted(Comparator.comparing(Person::getSurname))
                 .forEach(fitToWork::add);
 
-        //создаем коллекцию для сортированной выборки
-        Collection<Person> sortedFitToWork = new ArrayList<>();
+        System.out.println(fitToWork.size());
 
-        //сортируем
-        fitToWork.stream()
-                .sorted(Comparator.comparing(Person::getSurname))
-                .forEach(sortedFitToWork::add);
-
-        System.out.println(sortedFitToWork.size());
+        for (Person person : fitToWork) {
+            System.out.println(person);
+        }
 
     }
 }
